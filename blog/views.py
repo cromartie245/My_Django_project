@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from .models import Post
+from django.views.generic import ListView, DetailView
 
 posts = [
     {
@@ -30,6 +31,20 @@ def home(request):
         'posts': posts
     }
     return render(request, 'blog/home.html', context)
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    ordering = ['-date_added']
+
+
+class PostDetailView(DetailView):
+    model = Post
+    #template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    #context_object_name = 'posts'
+    #ordering = ['-date_added']
 
 
 def about(request):
